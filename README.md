@@ -1,2 +1,4 @@
 # Bachelor-thesis-project
-Repository dedicated to the collection of macros used for the bachelor thesis project analysis.
+
+This repository contains a collection of macros used for the analysis performed in my bachelor thesis project, in the context of Monte Carlo generated Vector Boson Scattering events in semi-leptonic
+channel.
