@@ -11,37 +11,50 @@
 #include <TFile.h>
 #include <cmath>
 #include <TLegend.h>
+#include "canva.cpp"
+#include "TColor.h"
+
 
 
 void GenJetAK8_match(
     TString output="Gen_match.root"
 ){
     TFile *f=new TFile(output, "recreate");
-int pt_lim = 300;
+int pt_lim = 150;
 
-TH1F *h_zg_quarksLL = new TH1F("h_zg_quarksLL", "z_{g} quarks  (L); z_{g} ; Events", 30,  0, 0.5);
-TH1F *h_zg_subjetsLL = new TH1F("h_zg_subjetsLL", Form("z_{g} subjets p_{t} > %d   (L); z_{g} ; Events", pt_lim), 30, 0, 0.5);
-TH1F *h_ptheta_quarksLL = new TH1F("h_ptheta_quarksLL", "p_{#theta} quarks  (L); p_{#theta} ; Events",30, 0, 1);
-TH1F *h_ptheta_subjetsLL = new TH1F("h_ptheta_subjetsLL", Form("p_{#theta} subjets p_{t} > %d   (L); p_{#theta} ; Events", pt_lim), 30, 0, 1);
+TH1F *h_zg_quarksLL = new TH1F("h_zg_quarksLL", Form("z_{g} quarks p_{T} > %d  (L)   (CMS private work); z_{g} ; Events", pt_lim), 20,  0.1, 0.5);
+TH1F *h_zg_subjetsLL = new TH1F("h_zg_subjetsLL", Form("z_{g} subjets p_{T} > %d   (L)   (CMS private work); z_{g} ; Events", pt_lim), 20, 0.1, 0.5);
+TH1F *h_zg_ratioLL = new TH1F("h_zg_ratioLL", Form("z_{g}' subjets p_{T} > %d   (L)   (CMS private work); z_{g}' ; Events", pt_lim), 20, 1, 10);
+TH1F *h_zg_ratio_quarksLL = new TH1F("h_zg_ratio_quarksLL", "z_{g}' quarks  (L)   (CMS private work); z_{g}' ; Events", 20,  1, 10);
+TH1F *h_ptheta_quarksLL = new TH1F("h_ptheta_quarksLL", Form("p_{#theta} quarks p_{T} > %d  (L)   (CMS private work); p_{#theta} ; Events", pt_lim),20, 0, 0.9);
+TH1F *h_ptheta_subjetsLL = new TH1F("h_ptheta_subjetsLL", Form("p_{#theta} subjets p_{T} > %d   (L)   (CMS private work); p_{#theta} ; Events", pt_lim), 20, 0, 0.9);
 
-TH1F *h_zg_quarksTT = new TH1F("h_zg_quarksTT", "z_{g} quarks  (T); z_{g} ; Events", 30,  0, 0.5);
-TH1F *h_zg_subjetsTT = new TH1F("h_zg_subjetsTT", Form("z_{g} subjets p_{t} > %d   (T); z_{g} ; Events", pt_lim), 30, 0, 0.5);
-TH1F *h_ptheta_quarksTT = new TH1F("h_ptheta_quarksTT", "p_{#theta} quarks  (T); p_{#theta} ; Events",30, 0, 1);
-TH1F *h_ptheta_subjetsTT = new TH1F("h_ptheta_subjetsTT", Form("p_{#theta} subjets p_{t} > %d   (T); p_{#theta} ; Events", pt_lim), 30, 0, 1);
+TH1F *h_zg_quarksTT = new TH1F("h_zg_quarksTT", Form("z_{g} quarks p_{T} > %d  (T)   (CMS private work); z_{g} ; Events", pt_lim), 20,  0.1, 0.5);
+TH1F *h_zg_subjetsTT = new TH1F("h_zg_subjetsTT", Form("z_{g} subjets p_{T} > %d   (T)   (CMS private work); z_{g} ; Events", pt_lim), 20, 0.1, 0.5);
+TH1F *h_zg_ratioTT = new TH1F("h_zg_ratioTT", Form("z_{g}' subjets p_{T} > %d   (T)   (CMS private work); z_{g}' ; Events", pt_lim), 20, 1, 10);
+TH1F *h_zg_ratio_quarksTT = new TH1F("h_zg_ratio_quarksTT", "z_{g}' quarks  (T)   (CMS private work); z_{g}' ; Events", 20,  1, 10);
+TH1F *h_ptheta_quarksTT = new TH1F("h_ptheta_quarksTT", Form("p_{#theta} quarks p_{T} > %d  (T)   (CMS private work); p_{#theta} ; Events", pt_lim),20, 0, 0.9);
+TH1F *h_ptheta_subjetsTT = new TH1F("h_ptheta_subjetsTT", Form("p_{#theta} subjets p_{T} > %d   (T)   (CMS private work); p_{#theta} ; Events", pt_lim), 20, 0, 0.9);
 
-TH1F *h_Lp_LL = new TH1F("h_Lp1_L", "Lepton projection (L); L_{P}; Events", 30, 0, 1.2);
-TH1F *h_Lp_TT = new TH1F("h_Lp1_T", "Lepton projection (T); L_{P}; Events", 30, 0, 1.2);
+
 
 
 //leptons
-TH1F *h_lep_ptLL = new TH1F("h_lep1_ptL", "Lepton p_{T} (L); p_{T} [GeV]; Events", 50, 0, 400);
-TH1F *h_lep_ptTT = new TH1F("h_lep1_ptT", "Lepton p_{T} (T); p_{T} [GeV]; Events", 50, 0, 400);
+TH1F *h_Lp_LL = new TH1F("h_Lp_L", "Lepton projection   (CMS private work); L_{P}; Events", 20, 0, 1.2);
+TH1F *h_Lp_TT = new TH1F("h_Lp_T", "Lepton projection   (CMS private work); L_{P}; Events", 20, 0, 1.2);
+TH1F *h_cos2D_LL = new TH1F("h_cos2D_L", "Lepton cos2D   (CMS private work); cos2D; Events", 20, -1,1);
+TH1F *h_costheta_star_LL = new TH1F("h_costheta_star_L", "Lepton cos #theta*   (CMS private work); cos #theta*; Events", 20, -1,1);
+TH1F *h_cos2D_TT = new TH1F("h_cos2D_T", "Lepton cos2D   (CMS private work); cos2D; Events", 20, -1,1);
+TH1F *h_costheta_star_TT = new TH1F("h_costheta_star_T", "Lepton cos #theta*   (CMS private work); cos #theta*; Events", 20, -1,1);
 
-TH1F *h_lep_etaLL = new TH1F("h_lep_etaLL", "Lepton #eta (L); #eta; Events", 50, -6, 6);
-TH1F *h_lep_etaTT = new TH1F("h_lep_etaTT", "Lepton #eta (T); #eta; Events", 50, -6, 6);
+TH1F *h_lep_ptLL = new TH1F("h_lep1_ptL", "Lepton p_{T}    (CMS private work); p_{T} [GeV]; Events", 50, 0, 400);
+TH1F *h_lep_ptTT = new TH1F("h_lep1_ptT", "Lepton p_{T}    (CMS private work); p_{T} [GeV]; Events", 50, 0, 400);
 
-TH1F *h_lep_phiLL = new TH1F("h_lep_phiLL", "Lepton #phi (L); #phi; Events", 50, -4, 4);
-TH1F *h_lep_phiTT = new TH1F("h_lep_phiTT", "Lepton #phi (T); #phi; Events", 50, 4, 4);
+TH1F *h_lep_etaLL = new TH1F("h_lep_etaLL", "Lepton #eta   (CMS private work); #eta; Events", 50, -6, 6);
+TH1F *h_lep_etaTT = new TH1F("h_lep_etaTT", "Lepton #eta   (CMS private work); #eta; Events", 50, -6, 6);
+
+TH1F *h_lep_phiLL = new TH1F("h_lep_phiLL", "Lepton #phi   (CMS private work); #phi; Events", 50, -4, 4);
+TH1F *h_lep_phiTT = new TH1F("h_lep_phiTT", "Lepton #phi   (CMS private work); #phi; Events", 50, 4, 4);
 
 
 
@@ -58,93 +71,93 @@ TH1F *h_nMatchedJetsTT = new TH1F(
 
 TH1F *h_dR_q1_jetLL = new TH1F(
     "h_dR_q1_jetLL",
-    Form("#DeltaR(quark_{1}, GenJetAK8) (L) p_{t} > %d;#DeltaR", pt_lim),
-    50, 0, 1
+    Form("#DeltaR(q_{1}, GenJetAK8) p_{T} > %d   (CMS private work);#DeltaR(q_{1}, Jet);Events", pt_lim),
+    35, 0, 0.8
 );
 TH1F *h_dR_q1_jetTT = new TH1F(
     "h_dR_q1_jetTT",
-    Form("#DeltaR(quark_{1}, GenJetAK8) (T) p_{t} > %d;#DeltaR", pt_lim),
-    50, 0, 1
+    Form("#DeltaR(q_{1}, GenJetAK8) p_{T} > %d   (CMS private work);#DeltaR(q_{1}, Jet); Events", pt_lim),
+    35, 0, 0.8
 );
 
-TH1F *h_dR_qqLL = new TH1F("h_dR_qqLL", Form("#DeltaR qq p_{t} > %d     (L); #DeltaR", pt_lim), 50, 0, 1);
-TH1F *h_dR_qqTT = new TH1F("h_dR_qqTT", Form("#DeltaR qq p_{t} > %d     (T); #DeltaR", pt_lim), 50, 0, 1);
+TH1F *h_dR_qqLL = new TH1F("h_dR_qqLL", Form("#DeltaR quarks p_{T} > %d  (L)   (CMS private work); #DeltaR; Events", pt_lim), 40, 0, 1);
+TH1F *h_dR_qqTT = new TH1F("h_dR_qqTT", Form("#DeltaR quarks p_{T} > %d  (T)   (CMS private work); #DeltaR; Events", pt_lim), 40, 0, 1);
 
 TH1F *h_dR_q2_jetLL = new TH1F(
     "h_dR_q2_jetLL",
-    Form("#DeltaR(quark_{2}, GenJetAK8) (L) p_{t} > %d;#DeltaR", pt_lim),
-    50, 0, 1
+    Form("#DeltaR(q_{2}, GenJetAK8) p_{T} > %d   (CMS private work);#DeltaR(q_{2}, Jet);Events", pt_lim),
+    35, 0, 0.8
 );
 TH1F *h_dR_q2_jetTT = new TH1F(
     "h_dR_q2_jetTT",
-    Form("#DeltaR(quark_{2}, GenJetAK8) (T) p_{t} > %d;#DeltaR", pt_lim),
-    50, 0, 1
+    Form("#DeltaR(q_{2}, GenJetAK8) p_{T} > %d   (CMS private work);#DeltaR(q_{2}, Jet);Events", pt_lim),
+    35, 0, 0.8
 );
 
 TH1F *h_matchedJet_ptLL = new TH1F(
     "h_matchedJet_ptLL",
-    "Matched GenJetAK8 p_{T} (L);p_{T} [GeV]",
-    50, 0, 1000
+    "Matched GenJetAK8 p_{T} (L)   (CMS private work);p_{T} [GeV]",
+    40, 0, 1000
 );
 TH1F *h_matchedJet_ptTT = new TH1F(
     "h_matchedJet_ptTT",
-    "Matched GenJetAK8 p_{T} (T);p_{T} [GeV]",
-    50, 0, 1000
+    "Matched GenJetAK8 p_{T} (T)   (CMS private work);p_{T} [GeV]",
+    40, 0, 1000
 );
 
 TH1F *h_matchedJet_massLL = new TH1F(
     "h_matchedJet_massLL",
-    "Matched GenJetAK8 mass (L);Mass [GeV]",
-    50, 0, 300
+    "Matched GenJetAK8 mass (L)   (CMS private work);Mass [GeV]",
+    40, 10, 170
 );
 TH1F *h_matchedJet_massTT = new TH1F(
     "h_matchedJet_massTT",
-    "Matched GenJetAK8 mass (T);Mass [GeV]",
-    50, 0, 300
+    "Matched GenJetAK8 mass (T)   (CMS private work);Mass [GeV]",
+    40, 10, 170
 );
 
 TH1F *h_matchedJet_etaLL = new TH1F(
     "h_matchedJet_etaLL",
-    "Matched GenJetAK8 #eta (L);#eta",
-    40, -4, 4
+    "Matched GenJetAK8 #eta (L)   (CMS private work);#eta",
+    30, -4, 4
 );
 TH1F *h_matchedJet_etaTT = new TH1F(
     "h_matchedJet_etaTT",
-    "Matched GenJetAK8 #eta (T);#eta",
-    40, -4, 4
+    "Matched GenJetAK8 #eta (T)   (CMS private work);#eta",
+    30, -4, 4
 );
 
 TH1F *h_matchedJet_phiLL = new TH1F(
     "h_matchedJet_phiLL",
-    "Matched GenJetAK8 #phi (L);#phi",
-    40, -4, 4
+    "Matched GenJetAK8 #phi (L)   (CMS private work);#phi",
+    30, -4, 4
 );
 TH1F *h_matchedJet_phiTT = new TH1F(
     "h_matchedJet_phiTT",
-    "Matched GenJetAK8 #phi (T);#phi",
-    40, -4, 4
+    "Matched GenJetAK8 #phi (T)   (CMS private work);#phi",
+    30, -4, 4
 );
 
 TH2F *h_Wpt_vs_jetptLL = new TH2F(
     "h_Wpt_vs_jetptLL",
-    "Hadronic W p_{T} vs Matched Jet p_{T} (L);W p_{T} [GeV];Jet p_{T} [GeV]",
-    50, 0, 1000,
-    50, 0, 1000
+    "Hadronic W p_{T} vs Matched Jet p_{T} (L)  (CMS private work);W p_{T} [GeV];Jet p_{T} [GeV]",
+    50, 120, 1000,
+    50, 120, 1000
 );
 TH2F *h_Wpt_vs_jetptTT = new TH2F(
     "h_Wpt_vs_jetptTT",
-    "Hadronic W p_{T} vs Matched Jet p_{T} (T);W p_{T} [GeV];Jet p_{T} [GeV]",
-    50, 0, 1000,
-    50, 0, 1000
+    "Hadronic W p_{T} vs Matched Jet p_{T} (T)  (CMS private work);W p_{T} [GeV];Jet p_{T} [GeV]",
+    50, 120, 1000,
+    50, 120, 1000
 );
 
-TH2F *h_dRqq_vs_ptLL = new TH2F("h_dRqq_vs_ptLL", "qq #DeltaR vs Matched Jet p_{t} (L); #DeltaR; Jet p_{t} [GeV]", 
+TH2F *h_dRqq_vs_ptLL = new TH2F("h_dRqq_vs_ptLL", "#DeltaR(q_{1},q_{2}) vs Matched Jet p_{T} (L)  (CMS private work); #DeltaR(q_{1},q_{2}); Jet p_{T} [GeV]", 
     50, 0, 1,
-    50, 0, 1000
+    50, 130, 1000
 );
-TH2F *h_dRqq_vs_ptTT = new TH2F("h_dRqq_vs_ptTT", "qq #DeltaR vs Matched Jet p_{t} (T); #DeltaR; Jet p_{t} [GeV]", 
+TH2F *h_dRqq_vs_ptTT = new TH2F("h_dRqq_vs_ptTT", "#DeltaR(q_{1},q_{2}) vs Matched Jet p_{T} (T)  (CMS private work); #DeltaR(q_{1},q_{2}); Jet p_{T} [GeV]", 
     50, 0, 1,
-    50, 0, 1000
+    50, 130, 1000
 );
 
 
@@ -154,45 +167,45 @@ TH2F *h_dRqq_vs_ptTT = new TH2F("h_dRqq_vs_ptTT", "qq #DeltaR vs Matched Jet p_{
 //subjet
 TH1F *h_matchedSubJet1_ptLL = new TH1F(
     "h_matchedSubJet1_ptLL",
-    "Matched #1 SubGenJetAK8 p_{T} (L);p_{T} [GeV]",
+    "Matched #1 SubGenJetAK8 p_{T} (L)   (CMS private work);p_{T} [GeV]",
     30, 0, 1000
 );
 TH1F *h_matchedSubJet1_ptTT = new TH1F(
     "h_matchedSubJet1_ptTT",
-    "Matched #1 SubGenJetAK8 p_{T} (T);p_{T} [GeV]",
+    "Matched #1 SubGenJetAK8 p_{T} (T)   (CMS private work);p_{T} [GeV]",
     30, 0, 1000
 );
 
 TH1F *h_matchedSubJet1_massLL = new TH1F(
     "h_matchedSubJet1_massLL",
-    "Matched #1 SubGenJetAK8 mass (L);Mass [GeV]",
+    "Matched #1 SubGenJetAK8 mass (L)   (CMS private work);Mass [GeV]",
     30, 0, 100
 );
 TH1F *h_matchedSubJet1_massTT = new TH1F(
     "h_matchedSubJet1_massTT",
-    "Matched #1 SubGenJetAK8 mass (T);Mass [GeV]",
+    "Matched #1 SubGenJetAK8 mass (T)   (CMS private work);Mass [GeV]",
     30, 0, 100
 );
 
 TH1F *h_matchedSubJet2_ptLL = new TH1F(
     "h_matchedSubJet2_ptLL",
-    "Matched #2 SubGenJetAK8 p_{T} (L);p_{T} [GeV]",
+    "Matched #2 SubGenJetAK8 p_{T} (L)   (CMS private work);p_{T} [GeV]",
     30, 0, 1000
 );
 TH1F *h_matchedSubJet2_ptTT = new TH1F(
     "h_matchedSubJet2_ptTT",
-    "Matched #2 SubGenJetAK8 p_{T} (T);p_{T} [GeV]",
+    "Matched #2 SubGenJetAK8 p_{T} (T)   (CMS private work);p_{T} [GeV]",
     30, 0, 1000
 );
 
 TH1F *h_matchedSubJet2_massLL = new TH1F(
     "h_matchedSubJet2_massLL",
-    "Matched #2 SubGenJetAK8 mass (L);Mass [GeV]",
+    "Matched #2 SubGenJetAK8 mass (L)   (CMS private work);Mass [GeV]",
     30, 0, 100
 );
 TH1F *h_matchedSubJet2_massTT = new TH1F(
     "h_matchedSubJet2_massTT",
-    "Matched #2 SubGenJetAK8 mass (T);Mass [GeV]",
+    "Matched #2 SubGenJetAK8 mass (T)   (CMS private work);Mass [GeV]",
     30, 0, 100
 );
 
@@ -279,10 +292,10 @@ TH1F *h_matchedSubJet2_massTT = new TH1F(
     chainTT->SetBranchAddress("GenJetAK8_partonFlavour", GenJetAK8_partonFlavour);
 
 
-void funzione(TTree *t, Int_t evento){
+//void funzione(TTree *t, Int_t evento){
 
     for(int iEvent = 0; iEvent < chainLL->GetEntries(); ++iEvent) {
-        t->GetEntry(evento);
+        chainLL->GetEntry(iEvent);
         if(iEvent%10000==0){
             std::cout<<"Processing event L: "<<iEvent<<std::endl;
         }
@@ -355,6 +368,24 @@ void funzione(TTree *t, Int_t evento){
                 h_lep_etaLL->Fill(GenPart_eta[leps_fromW.second]);
                 h_lep_phiLL->Fill(GenPart_phi[leps_fromW.second]);
 
+                //boost di Lorentz
+                TLorentzVector lep, W;
+                lep.SetPtEtaPhiM(GenPart_pt[leps_fromW.second], GenPart_eta[leps_fromW.second], GenPart_phi[leps_fromW.second], GenPart_mass[leps_fromW.second]);
+                W.SetPtEtaPhiM(GenPart_pt[lepWboson], GenPart_eta[lepWboson], GenPart_phi[lepWboson], GenPart_mass[lepWboson]);
+
+                TVector3 boostW = -W.BoostVector();
+                TLorentzVector lep_star = lep;
+                lep_star.Boost(boostW); //leptone nel sdr del W
+                TVector2 pt_lep_star(lep_star.Px(), lep_star.Py());
+                TVector2 pt_W_lab(W.Px(), W.Py());
+                double cos2D = (pt_lep_star*pt_W_lab)/(pt_lep_star.Mod()*pt_W_lab.Mod());
+                h_cos2D_LL->Fill(cos2D);
+
+                TVector3 p_lep_star(lep_star.Px(), lep_star.Py(), lep_star.Pz());
+                TVector3 p_W_lab(W.Px(), W.Py(), W.Pz());
+                double costheta_star = (p_lep_star.Dot(p_W_lab))/(p_lep_star.Mag()*p_W_lab.Mag());
+                h_costheta_star_LL->Fill(costheta_star);
+
             }
             else{
                 double dPhi1 = std::abs(GenPart_phi[leps_fromW.first] - GenPart_phi[lepWboson]);
@@ -366,6 +397,24 @@ void funzione(TTree *t, Int_t evento){
                 h_lep_ptLL->Fill(GenPart_pt[leps_fromW.first]);
                 h_lep_etaLL->Fill(GenPart_eta[leps_fromW.first]);
                 h_lep_phiLL->Fill(GenPart_phi[leps_fromW.first]);
+
+                //boost di Lorentz
+                TLorentzVector lep, W;
+                lep.SetPtEtaPhiM(GenPart_pt[leps_fromW.first], GenPart_eta[leps_fromW.first], GenPart_phi[leps_fromW.first], GenPart_mass[leps_fromW.first]);
+                W.SetPtEtaPhiM(GenPart_pt[lepWboson], GenPart_eta[lepWboson], GenPart_phi[lepWboson], GenPart_mass[lepWboson]);
+
+                TVector3 boostW = -W.BoostVector();
+                TLorentzVector lep_star = lep;
+                lep_star.Boost(boostW); //leptone nel sdr del W
+                TVector2 pt_lep_star(lep_star.Px(), lep_star.Py());
+                TVector2 pt_W_lab(W.Px(), W.Py());
+                double cos2D = (pt_lep_star*pt_W_lab)/(pt_lep_star.Mod()*pt_W_lab.Mod());
+                h_cos2D_LL->Fill(cos2D);
+
+                TVector3 p_lep_star(lep_star.Px(), lep_star.Py(), lep_star.Pz());
+                TVector3 p_W_lab(W.Px(), W.Py(), W.Pz());
+                double costheta_star = (p_lep_star.Dot(p_W_lab))/(p_lep_star.Mag()*p_W_lab.Mag());
+                h_costheta_star_LL->Fill(costheta_star);
 
                 }
             //double coss1 = 2*Lp1 -1;
@@ -387,7 +436,7 @@ void funzione(TTree *t, Int_t evento){
         }
         
     
- /*  
+   
     int matchedSubJetsThisEventLL = 0;
     int matchedJetsThisEventLL = 0;
     int matchedJetIndexLL=-1;
@@ -448,7 +497,7 @@ void funzione(TTree *t, Int_t evento){
         }
         
     }
-    h_nMatchedJetsLL->Fill(matchedJetsThisEventLL);
+    //h_nMatchedJetsLL->Fill(matchedJetsThisEventLL);
 
     if(matchedJetIndexLL >= 0){
         for(int isj=0; isj<nSubGenJetAK8; isj++){
@@ -464,8 +513,10 @@ void funzione(TTree *t, Int_t evento){
 
         }
         if(sgjIndex.size() == 2){
-            double pt_minv;
+            double pt_minv, pt_max;
+            pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
             pt_minv = std::min(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            h_zg_ratioLL->Fill(pt_max/pt_minv);
             h_zg_subjetsLL->Fill(pt_minv/(SubGenJetAK8_pt[sgjIndex[0]] + SubGenJetAK8_pt[sgjIndex[1]]));
             double E1, E2;
             E1=std::sqrt(SubGenJetAK8_mass[sgjIndex[0]]*SubGenJetAK8_mass[sgjIndex[0]] + SubGenJetAK8_pt[sgjIndex[0]]*SubGenJetAK8_pt[sgjIndex[0]]);
@@ -491,9 +542,11 @@ void funzione(TTree *t, Int_t evento){
                 }
             }
             if(foundPair != true) continue;
-            double pt_minp;
-            pt_minp = std::min(SubGenJetAK8_pt[sgjDefIndex.first], SubGenJetAK8_pt[sgjDefIndex.second]);
-            h_zg_subjetsLL->Fill(pt_minp/(SubGenJetAK8_pt[sgjDefIndex.first] + SubGenJetAK8_pt[sgjDefIndex.second]));
+            double pt_minv, pt_max;
+            pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            pt_minv = std::min(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            h_zg_ratioLL->Fill(pt_max/pt_minv);
+            h_zg_subjetsLL->Fill(pt_minv/(SubGenJetAK8_pt[sgjDefIndex.first] + SubGenJetAK8_pt[sgjDefIndex.second]));
             double E1, E2;
             E1=std::sqrt(SubGenJetAK8_mass[sgjDefIndex.first]*SubGenJetAK8_mass[sgjDefIndex.first] + SubGenJetAK8_pt[sgjDefIndex.first]*SubGenJetAK8_pt[sgjDefIndex.first]);
             E2=std::sqrt(SubGenJetAK8_mass[sgjDefIndex.second]*SubGenJetAK8_mass[sgjDefIndex.second] + SubGenJetAK8_pt[sgjDefIndex.second]*SubGenJetAK8_pt[sgjDefIndex.second]);
@@ -506,6 +559,9 @@ void funzione(TTree *t, Int_t evento){
         
         double pt_min_q = std::min(GenPart_pt[quarks_fromW.first], GenPart_pt[quarks_fromW.second]);
         h_zg_quarksLL->Fill(pt_min_q/(GenPart_pt[quarks_fromW.first] + GenPart_pt[quarks_fromW.second]));
+        double pt_max;
+        pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+        h_zg_ratio_quarksLL->Fill(pt_max/pt_min_q);
 
         double E1_q, E2_q;
         E1_q = std::sqrt(GenPart_mass[quarks_fromW.first]*GenPart_mass[quarks_fromW.first] + GenPart_pt[quarks_fromW.first]*GenPart_pt[quarks_fromW.first]);
@@ -554,7 +610,7 @@ void funzione(TTree *t, Int_t evento){
                 break; 
             }
 
-        }*/
+        }
     }
     
 
@@ -622,9 +678,28 @@ void funzione(TTree *t, Int_t evento){
 
                 double Lp = (GenPart_pt[lepWboson]*GenPart_pt[leps_fromW.second]*cos(dPhi1))/(std::abs(GenPart_pt[lepWboson]*GenPart_pt[lepWboson]));
                 h_Lp_TT->Fill(Lp);
+                
                 h_lep_ptTT->Fill(GenPart_pt[leps_fromW.second]);
                 h_lep_etaTT->Fill(GenPart_eta[leps_fromW.second]);
                 h_lep_phiTT->Fill(GenPart_phi[leps_fromW.second]);
+
+                //boost di Lorentz
+                TLorentzVector lep, W;
+                lep.SetPtEtaPhiM(GenPart_pt[leps_fromW.second], GenPart_eta[leps_fromW.second], GenPart_phi[leps_fromW.second], GenPart_mass[leps_fromW.second]);
+                W.SetPtEtaPhiM(GenPart_pt[lepWboson], GenPart_eta[lepWboson], GenPart_phi[lepWboson], GenPart_mass[lepWboson]);
+
+                TVector3 boostW = -W.BoostVector();
+                TLorentzVector lep_star = lep;
+                lep_star.Boost(boostW); //leptone nel sdr del W
+                TVector2 pt_lep_star(lep_star.Px(), lep_star.Py());
+                TVector2 pt_W_lab(W.Px(), W.Py());
+                double cos2D = (pt_lep_star*pt_W_lab)/(pt_lep_star.Mod()*pt_W_lab.Mod());
+                h_cos2D_TT->Fill(cos2D);
+
+                TVector3 p_lep_star(lep_star.Px(), lep_star.Py(), lep_star.Pz());
+                TVector3 p_W_lab(W.Px(), W.Py(), W.Pz());
+                double costheta_star = (p_lep_star.Dot(p_W_lab))/(p_lep_star.Mag()*p_W_lab.Mag());
+                h_costheta_star_TT->Fill(costheta_star);
 
             }
             else{
@@ -634,14 +709,33 @@ void funzione(TTree *t, Int_t evento){
 
                 double Lp = (GenPart_pt[lepWboson]*GenPart_pt[leps_fromW.first]*cos(dPhi1))/(std::abs(GenPart_pt[lepWboson]*GenPart_pt[lepWboson]));
                 h_Lp_TT->Fill(Lp);
+                
                 h_lep_ptTT->Fill(GenPart_pt[leps_fromW.first]);
                 h_lep_etaTT->Fill(GenPart_eta[leps_fromW.first]);
                 h_lep_phiTT->Fill(GenPart_phi[leps_fromW.first]);
+
+                //boost di Lorentz
+                TLorentzVector lep, W;
+                lep.SetPtEtaPhiM(GenPart_pt[leps_fromW.first], GenPart_eta[leps_fromW.first], GenPart_phi[leps_fromW.first], GenPart_mass[leps_fromW.first]);
+                W.SetPtEtaPhiM(GenPart_pt[lepWboson], GenPart_eta[lepWboson], GenPart_phi[lepWboson], GenPart_mass[lepWboson]);
+
+                TVector3 boostW = -W.BoostVector();
+                TLorentzVector lep_star = lep;
+                lep_star.Boost(boostW); //leptone nel sdr del W
+                TVector2 pt_lep_star(lep_star.Px(), lep_star.Py());
+                TVector2 pt_W_lab(W.Px(), W.Py());
+                double cos2D = (pt_lep_star*pt_W_lab)/(pt_lep_star.Mod()*pt_W_lab.Mod());
+                h_cos2D_TT->Fill(cos2D);
+
+                TVector3 p_lep_star(lep_star.Px(), lep_star.Py(), lep_star.Pz());
+                TVector3 p_W_lab(W.Px(), W.Py(), W.Pz());
+                double costheta_star = (p_lep_star.Dot(p_W_lab))/(p_lep_star.Mag()*p_W_lab.Mag());
+                h_costheta_star_TT->Fill(costheta_star);
         
             }
 
         }
-    /*
+    
     int matchedSubJetsThisEventTT = 0;
     int matchedJetsThisEventTT = 0;
     int matchedJetIndexTT=-1;
@@ -715,8 +809,10 @@ void funzione(TTree *t, Int_t evento){
         }
         if(sgjIndex.size() == 2){
 
-            double pt_minv;
+            double pt_minv, pt_max;
+            pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
             pt_minv = std::min(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            h_zg_ratioTT->Fill(pt_max/pt_minv);
             h_zg_subjetsTT->Fill(pt_minv/(SubGenJetAK8_pt[sgjIndex[0]] + SubGenJetAK8_pt[sgjIndex[1]]));
             double E1, E2;
             E1=std::sqrt(SubGenJetAK8_mass[sgjIndex[0]]*SubGenJetAK8_mass[sgjIndex[0]] + SubGenJetAK8_pt[sgjIndex[0]]*SubGenJetAK8_pt[sgjIndex[0]]);
@@ -742,8 +838,10 @@ void funzione(TTree *t, Int_t evento){
                 }
             }
             if(foundPair != true) continue;
-            double pt_minp;
-            pt_minp = std::min(SubGenJetAK8_pt[sgjDefIndex.first], SubGenJetAK8_pt[sgjDefIndex.second]);
+            double pt_minp, pt_max;
+            pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            pt_minp = std::min(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+            h_zg_ratioTT->Fill(pt_max/pt_minp);
             h_zg_subjetsTT->Fill(pt_minp/(SubGenJetAK8_pt[sgjDefIndex.first] + SubGenJetAK8_pt[sgjDefIndex.second]));
             double E1, E2;
             E1=std::sqrt(SubGenJetAK8_mass[sgjDefIndex.first]*SubGenJetAK8_mass[sgjDefIndex.first] + SubGenJetAK8_pt[sgjDefIndex.first]*SubGenJetAK8_pt[sgjDefIndex.first]);
@@ -757,6 +855,9 @@ void funzione(TTree *t, Int_t evento){
         double pt_min_q;
         pt_min_q = std::min(GenPart_pt[quarks_fromW.first], GenPart_pt[quarks_fromW.second]);
         h_zg_quarksTT->Fill(pt_min_q/(GenPart_pt[quarks_fromW.first] + GenPart_pt[quarks_fromW.second]));
+        double pt_max;
+        pt_max = std::max(SubGenJetAK8_pt[sgjIndex[0]], SubGenJetAK8_pt[sgjIndex[1]]);
+        h_zg_ratio_quarksTT->Fill(pt_max/pt_min_q);
 
         double E1_q, E2_q;
         E1_q = std::sqrt(GenPart_mass[quarks_fromW.first]*GenPart_mass[quarks_fromW.first] + GenPart_pt[quarks_fromW.first]*GenPart_pt[quarks_fromW.first]);
@@ -808,92 +909,63 @@ void funzione(TTree *t, Int_t evento){
                 break; 
             }
 
-        }*/
+        }
 
     }    
 
-    /*
-    TCanvas *c_matchedJ_pt = new TCanvas("c_matchedJ_pt", "matchedJ pt", 1400, 800);
-    c_matchedJ_pt->Divide(2,1);
-    c_matchedJ_pt->cd(1);
-    h_matchedJet_ptLL->Scale(1.0 / h_matchedJet_ptLL->Integral());
-    h_matchedJet_ptLL->Draw("hist");
-    h_matchedJet_ptLL->SetLineColor(kBlue+1);
-    h_matchedJet_ptLL->SetFillColor(kBlue+1);
+    std::vector<Color_t> colors;
+    colors.push_back(kAzure-2);
+    colors.push_back(kRed);
 
-    c_matchedJ_pt->cd(2);
-    h_matchedJet_ptTT->Scale(1.0 / h_matchedJet_ptTT->Integral());
-    h_matchedJet_ptTT->Draw("hist");
-    h_matchedJet_ptTT->SetLineColor(kRed+1);
-    h_matchedJet_ptTT->SetFillColor(kRed+1);
+    std::vector<Color_t> colors2;
+    colors2.push_back(kAzure-1);
+    colors2.push_back(kRed+1);
+
+    /*TCanvas *c_matchedJ_pt = new TCanvas("c_matchedJ_pt", "matchedJ pt", 1200, 600);
+    std::vector<TH1*> matchedJ_pt;
+    matchedJ_pt.push_back(h_matchedJet_ptLL);
+    matchedJ_pt.push_back(h_matchedJet_ptTT);
+    Makecanva2x1Bicolor(c_matchedJ_pt, matchedJ_pt, colors);
     c_matchedJ_pt->SaveAs("plots_pt/c_matchedJ_pt.pdf");
 
 
 
-    TCanvas *c_matchedJ_mass = new TCanvas("c_matchedJ_mass", "matchedJ mass", 1400, 800);
-    c_matchedJ_mass->Divide(2,1);
-    c_matchedJ_mass->cd(1);
-    h_matchedJet_massLL->Scale(1.0 / h_matchedJet_massLL->Integral());
-    h_matchedJet_massLL->Draw("hist");
-    h_matchedJet_massLL->SetLineColor(kBlue+1);
-    h_matchedJet_massLL->SetFillColor(kBlue+1);
-
-    c_matchedJ_mass->cd(2);
-    h_matchedJet_massTT->Scale(1.0 / h_matchedJet_massTT->Integral());
-    h_matchedJet_massTT->Draw("hist");
-    h_matchedJet_massTT->SetLineColor(kRed+1);
-    h_matchedJet_massTT->SetFillColor(kRed+1);
+    TCanvas *c_matchedJ_mass = new TCanvas("c_matchedJ_mass", "matchedJ mass", 1200, 600);
+    std::vector<TH1*> matchedJ_mass;
+    matchedJ_mass.push_back(h_matchedJet_massLL);
+    matchedJ_mass.push_back(h_matchedJet_massTT);
+    Makecanva2x1Bicolor(c_matchedJ_mass, matchedJ_mass, colors);
     c_matchedJ_mass->SaveAs("plots_m/c_matchedJ_mass.pdf");
 
 
 
-    TCanvas *c_matchedJ_eta = new TCanvas("c_matchedJ_eta", "matchedJ eta", 1400, 800);
-    c_matchedJ_eta->Divide(2,1);
-    c_matchedJ_eta->cd(1);
-    gPad->SetLeftMargin(0.15);
-    h_matchedJet_etaLL->Scale(1.0 / h_matchedJet_etaLL->Integral());
-    h_matchedJet_etaLL->Draw("hist");
-    h_matchedJet_etaLL->SetLineColor(kBlue+1);
-    h_matchedJet_etaLL->SetFillColor(kBlue+1);
-    h_matchedJet_etaLL->GetXaxis()->SetTitleSize(0.05);
-    gPad->SetBottomMargin(0.15);
-
-    c_matchedJ_eta->cd(2);
-    gPad->SetLeftMargin(0.15);
-    h_matchedJet_etaTT->Scale(1.0 / h_matchedJet_etaTT->Integral());
-    h_matchedJet_etaTT->Draw("hist");
-    h_matchedJet_etaTT->SetLineColor(kRed+1);
-    h_matchedJet_etaTT->SetFillColor(kRed+1);
-    h_matchedJet_etaTT->GetXaxis()->SetTitleSize(0.05);
-    gPad->SetBottomMargin(0.15);
+    TCanvas *c_matchedJ_eta = new TCanvas("c_matchedJ_eta", "matchedJ eta", 1200, 600);
+    std::vector<TH1*> matchedJ_eta;
+    matchedJ_eta.push_back(h_matchedJet_etaLL);
+    matchedJ_eta.push_back(h_matchedJet_etaTT);
+    Makecanva2x1Bicolor(c_matchedJ_eta, matchedJ_eta, colors);
     c_matchedJ_eta->SaveAs("plots_eta/c_matchedJ_eta.pdf");
 
 
 
-    TCanvas *c_matchedJ_phi = new TCanvas("c_matchedJ_phi", "matchedJ phi", 1400, 800);
-    c_matchedJ_phi->Divide(2,1);
-    c_matchedJ_phi->cd(1);
-    h_matchedJet_phiLL->Scale(1.0 / h_matchedJet_phiLL->Integral());
-    h_matchedJet_phiLL->Draw("hist");
-    h_matchedJet_phiLL->SetLineColor(kBlue+1);
-    h_matchedJet_phiLL->SetFillColor(kBlue+1);
-    h_matchedJet_phiLL->GetXaxis()->SetTitleSize(0.05);
-
-    c_matchedJ_phi->cd(2);
-    h_matchedJet_phiTT->Scale(1.0 / h_matchedJet_phiTT->Integral());
-    h_matchedJet_phiTT->Draw("hist");
-    h_matchedJet_phiTT->SetLineColor(kRed+1);
-    h_matchedJet_phiTT->SetFillColor(kRed+1);
-    h_matchedJet_phiTT->GetXaxis()->SetTitleSize(0.05);
+    TCanvas *c_matchedJ_phi = new TCanvas("c_matchedJ_phi", "matchedJ phi", 1200, 600);
+    std::vector<TH1*> matchedJ_phi;
+    matchedJ_phi.push_back(h_matchedJet_phiLL);
+    matchedJ_phi.push_back(h_matchedJet_phiTT);
+    Makecanva2x1Bicolor(c_matchedJ_phi, matchedJ_phi, colors);
     c_matchedJ_phi->SaveAs("plots_phi/c_matchedJ_phi.pdf");*/
 
 
 
-    /*TCanvas *c_W_gjet_pt = new TCanvas("c_W_gjet_pt","W vs jet p_{t}", 1500, 800);
+    /*TCanvas *c_W_gjet_pt = new TCanvas("c_W_gjet_pt","W vs jet p_{T}", 1500, 800);
     c_W_gjet_pt->Divide(2,1);
     c_W_gjet_pt->cd(1);
+    gPad->SetBottomMargin(0.15);
     gPad->SetLeftMargin(0.15);
     gPad->SetRightMargin(0.15);
+    h_Wpt_vs_jetptLL->SetTitleSize(0.07);
+    h_Wpt_vs_jetptLL->GetXaxis()->SetTitleSize(0.05);
+    h_Wpt_vs_jetptLL->GetYaxis()->SetTitleSize(0.05);
     h_Wpt_vs_jetptLL->Scale(1.0 / h_Wpt_vs_jetptLL->Integral());
     h_Wpt_vs_jetptLL->SetStats(0);
     h_Wpt_vs_jetptLL->Draw("colz");
@@ -901,6 +973,10 @@ void funzione(TTree *t, Int_t evento){
     c_W_gjet_pt->cd(2);
     gPad->SetLeftMargin(0.15);
     gPad->SetRightMargin(0.15);
+    gPad->SetBottomMargin(0.15);
+    h_Wpt_vs_jetptTT->SetTitleSize(0.07);
+    h_Wpt_vs_jetptTT->GetXaxis()->SetTitleSize(0.05);
+    h_Wpt_vs_jetptTT->GetYaxis()->SetTitleSize(0.05);
     h_Wpt_vs_jetptTT->Scale(1.0 / h_Wpt_vs_jetptTT->Integral());
     h_Wpt_vs_jetptTT->SetStats(0);
     h_Wpt_vs_jetptTT->Draw("colz");
@@ -909,44 +985,35 @@ void funzione(TTree *t, Int_t evento){
 
 
 
-    TCanvas *c_dRqq = new TCanvas("c_dRqq","#DeltaR qq", 1300, 800);
-    c_dRqq->Divide(2,1);
-    c_dRqq->cd(1);
-    h_dR_qqLL->Scale(1.0 / h_dR_qqLL->Integral());
-    h_dR_qqLL->Draw("hist");
-    h_dR_qqLL->SetLineColor(kBlue+1);
-    h_dR_qqLL->SetFillColor(kBlue+1);
-    h_dR_qqLL->GetXaxis()->SetTitleSize(0.05);
-
-    c_dRqq->cd(2);
-    h_dR_qqTT->Scale(1.0 / h_dR_qqTT->Integral());
-    h_dR_qqTT->Draw("hist");
-    h_dR_qqTT->SetLineColor(kRed+1);
-    h_dR_qqTT->SetFillColor(kRed+1);
-    h_dR_qqTT->GetXaxis()->SetTitleSize(0.05);
-
+    /*TCanvas *c_dRqq = new TCanvas("c_dRqq","#DeltaR qq", 1200, 600);
+    std::vector<TH1*> dRqq;
+    dRqq.push_back(h_dR_qqLL);
+    dRqq.push_back(h_dR_qqTT);
+    Makecanva2x1Bicolor(c_dRqq, dRqq, colors);
     c_dRqq->SaveAs("plots_pt/c_dRqq.pdf");
 
 
 
 
-    /*TCanvas *c_dRqq_vs_pt = new TCanvas("c_dRqq_vs_pt","W vs jet p_{t}", 1500, 800);
+    TCanvas *c_dRqq_vs_pt = new TCanvas("c_dRqq_vs_pt","W vs jet p_{T}", 1500, 800);
     c_dRqq_vs_pt->Divide(2,1);
     c_dRqq_vs_pt->cd(1);
     gPad->SetLeftMargin(0.15);
     gPad->SetRightMargin(0.15);
+    gPad->SetBottomMargin(0.15);
+    h_dRqq_vs_ptLL->SetTitleSize(0.05);
     h_dRqq_vs_ptLL->Scale(1.0 / h_dRqq_vs_ptLL->Integral());
     h_dRqq_vs_ptLL->SetStats(0);
-    h_dRqq_vs_ptLL->GetXaxis()->SetTitleSize(0.05);
     h_dRqq_vs_ptLL->GetYaxis()->SetTitleSize(0.05);
     h_dRqq_vs_ptLL->Draw("colz");
 
     c_dRqq_vs_pt->cd(2);
     gPad->SetLeftMargin(0.15);
     gPad->SetRightMargin(0.15);
+    gPad->SetBottomMargin(0.15);
+    h_dRqq_vs_ptTT->SetTitleSize(0.05);
     h_dRqq_vs_ptTT->Scale(1.0 / h_dRqq_vs_ptTT->Integral());
     h_dRqq_vs_ptTT->SetStats(0);
-    h_dRqq_vs_ptTT->GetXaxis()->SetTitleSize(0.05);
     h_dRqq_vs_ptTT->GetYaxis()->SetTitleSize(0.05);
     h_dRqq_vs_ptTT->Draw("colz");
     c_dRqq_vs_pt->SaveAs("plots_pt/c_dRqq_vs_pt.pdf");*/
@@ -954,346 +1021,234 @@ void funzione(TTree *t, Int_t evento){
 
 
     /*TCanvas *c_matchedSJ_pt = new TCanvas("c_matchedSJ_pt", "Matched Subjets pt", 1400, 1000);
-    c_matchedSJ_pt->Divide(2,2);
-
-    c_matchedSJ_pt->cd(1);
-    gPad->SetBottomMargin(0.15);
-    h_matchedSubJet1_ptLL->Scale(1.0/h_matchedSubJet1_ptLL->Integral());
-    h_matchedSubJet1_ptLL->Draw("hist");
-    h_matchedSubJet1_ptLL->SetLineColor(kBlue+1);
-    h_matchedSubJet1_ptLL->SetFillColor(kBlue+1);
-    h_matchedSubJet1_ptLL->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet1_ptLL->GetXaxis()->SetTitleOffset(0.09);
-
-    c_matchedSJ_pt->cd(2);
-    gPad->SetBottomMargin(0.15);
-    h_matchedSubJet1_ptTT->Scale(1.0/h_matchedSubJet1_ptTT->Integral());
-    h_matchedSubJet1_ptTT->Draw("hist");
-    h_matchedSubJet1_ptTT->SetLineColor(kRed+1);
-    h_matchedSubJet1_ptTT->SetFillColor(kRed+1);
-    h_matchedSubJet1_ptTT->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet1_ptTT->GetXaxis()->SetTitleOffset(0.09);
-
-    c_matchedSJ_pt->cd(3);
-    gPad->SetBottomMargin(0.15);
-    h_matchedSubJet2_ptLL->Scale(1.0/h_matchedSubJet2_ptLL->Integral());
-    h_matchedSubJet2_ptLL->Draw("hist");
-    h_matchedSubJet2_ptLL->SetLineColor(kBlue+1);
-    h_matchedSubJet2_ptLL->SetFillColor(kBlue+1);
-    h_matchedSubJet2_ptLL->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet2_ptLL->GetXaxis()->SetTitleOffset(0.09);
-
-    c_matchedSJ_pt->cd(4);
-    gPad->SetBottomMargin(0.15);
-    h_matchedSubJet2_ptTT->Scale(1.0/h_matchedSubJet2_ptTT->Integral());
-    h_matchedSubJet2_ptTT->Draw("hist");
-    h_matchedSubJet2_ptTT->SetLineColor(kRed+1);
-    h_matchedSubJet2_ptTT->SetFillColor(kRed+1);
-    h_matchedSubJet2_ptTT->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet2_ptTT->GetXaxis()->SetTitleOffset(0.09);
+    std::vector<TH1*> matchedSJ_pt;
+    matchedSJ_pt.push_back(h_matchedSubJet1_ptLL);
+    matchedSJ_pt.push_back(h_matchedSubJet1_ptTT);
+    matchedSJ_pt.push_back(h_matchedSubJet2_ptLL);
+    matchedSJ_pt.push_back(h_matchedSubJet2_ptTT);
+    Makecanva2x2Bicolor(c_matchedSJ_pt, matchedSJ_pt, colors);
     c_matchedSJ_pt->SaveAs("plots_sj/c_matchedSJ_pt.pdf");
 
 
 
     TCanvas *c_matchedSJ_mass = new TCanvas("c_matchedSJ_mass", "Matched Subjets mass", 1400, 1000);
-    c_matchedSJ_mass->Divide(2,2);
-
-    c_matchedSJ_mass->cd(1);
-    h_matchedSubJet1_massLL->Scale(1.0/h_matchedSubJet1_massLL->Integral());
-    h_matchedSubJet1_massLL->Draw("hist");
-    h_matchedSubJet1_massLL->SetLineColor(kBlue+1);
-    h_matchedSubJet1_massLL->SetFillColor(kBlue+1);
-    h_matchedSubJet1_massLL->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet1_massLL->GetXaxis()->SetTitleOffset(0.09);
-
-    c_matchedSJ_mass->cd(2);
-    h_matchedSubJet1_massTT->Scale(1.0/h_matchedSubJet1_massTT->Integral());
-    h_matchedSubJet1_massTT->Draw("hist");
-    h_matchedSubJet1_massTT->SetLineColor(kRed+1);
-    h_matchedSubJet1_massTT->SetFillColor(kRed+1);
-    h_matchedSubJet1_massTT->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet1_massTT->GetXaxis()->SetTitleOffset(0.09);
-    c_matchedSJ_pt->SaveAs("plots_sj/c_matchedSJ_pt.pdf");
-
-    c_matchedSJ_mass->cd(3);
-    h_matchedSubJet2_massLL->Scale(1.0/h_matchedSubJet2_massLL->Integral());
-    h_matchedSubJet2_massLL->Draw("hist");
-    h_matchedSubJet2_massLL->SetLineColor(kBlue+1);
-    h_matchedSubJet2_massLL->SetFillColor(kBlue+1);
-    h_matchedSubJet2_massLL->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet2_massLL->GetXaxis()->SetTitleOffset(0.09);
-
-    c_matchedSJ_mass->cd(4);
-    h_matchedSubJet2_massTT->Scale(1.0/h_matchedSubJet2_massTT->Integral());
-    h_matchedSubJet2_massTT->Draw("hist");
-    h_matchedSubJet2_massTT->SetLineColor(kRed+1);
-    h_matchedSubJet2_massTT->SetFillColor(kRed+1);
-    h_matchedSubJet2_massTT->GetXaxis()->SetTitleSize(0.05);
-    //h_matchedSubJet2_massTT->GetXaxis()->SetTitleOffset(0.09);
+    std::vector<TH1*> matchedSJ_mass;
+    matchedSJ_mass.push_back(h_matchedSubJet1_massLL);
+    matchedSJ_mass.push_back(h_matchedSubJet1_massTT);
+    matchedSJ_mass.push_back(h_matchedSubJet2_massLL);
+    matchedSJ_mass.push_back(h_matchedSubJet2_massTT);
+    Makecanva2x2Bicolor(c_matchedSJ_mass, matchedSJ_mass, colors);
     c_matchedSJ_mass->SaveAs("plots_sj/c_matchedSJ_mass.pdf");*/
 
 
     
-    TCanvas *c_zg_sgj = new TCanvas("c_zg_sgj","SubGenJet z_{g}", 1500, 900);
-    c_zg_sgj->Divide(2,1);
-
-    c_zg_sgj->cd(1);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_zg_subjetsLL->Scale(1.0 / h_zg_subjetsLL->Integral());
-    h_zg_subjetsLL->Draw("hist");
-    h_zg_subjetsLL->SetLineColor(kBlue+1);
-    h_zg_subjetsLL->SetFillColor(kBlue+1);
-    h_zg_subjetsLL->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_zg_sgj->cd(2);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_zg_subjetsTT->Scale(1.0 / h_zg_subjetsTT->Integral());
-    h_zg_subjetsTT->Draw("hist");
-    h_zg_subjetsTT->SetLineColor(kRed+1);
-    h_zg_subjetsTT->SetFillColor(kRed+1);
-    h_zg_subjetsTT->GetXaxis()->SetTitleSize(0.05);
+    TCanvas *c_zg_sgj = new TCanvas("c_zg_sgj","SubGenJet z_{g}", 1200, 600);
+    h_zg_subjetsLL->SetTitleSize(0.07);
+    h_zg_subjetsTT->SetTitleSize(0.07);
+    std::vector<TH1*> zg_sgj;
+    zg_sgj.push_back(h_zg_subjetsLL);
+    zg_sgj.push_back(h_zg_subjetsTT);
+    Makecanva2x1Bicolor(c_zg_sgj, zg_sgj, colors);
     c_zg_sgj->SaveAs("plots_z1/c_zg_sgj.pdf");
 
+    TCanvas *c_zg_sgj_pol = new TCanvas("c_zg_sgj_pol", "c_zg_sgj_pol", 800, 600);
+    h_zg_subjetsLL->SetTitleSize(0.07);
+    h_zg_subjetsLL->SetTitle(Form("z_{g} subjets  p_{T} > %d   (CMS private work)", pt_lim));
+    h_zg_subjetsLL->SetStats(0);
+    h_zg_subjetsTT->SetTitleSize(0.07);
+    std::vector<TH1*> zg_sgj_pol;
+    zg_sgj_pol.push_back(h_zg_subjetsLL);
+    zg_sgj_pol.push_back(h_zg_subjetsTT);
+    MakecanvaColor(c_zg_sgj_pol, zg_sgj_pol, colors2);
+    TLegend *leg2 = new TLegend(0.4, 0.74, 0.68, 0.88);
+    leg2->AddEntry(h_zg_subjetsLL, "L pol", "f");
+    leg2->AddEntry(h_zg_subjetsTT, "T pol", "f");
+    leg2->SetBorderSize(0);
+    leg2->SetFillStyle(0);
+    leg2->SetMargin(0.25);
+    leg2->Draw();
+    c_zg_sgj_pol->SaveAs("plots_z1/c_zg_sgj_pol.pdf");
+
+    /*TCanvas *c_zg_ratio = new TCanvas("c_zg_ratio","SubGenJet z_{g}'", 1200, 600);
+    h_zg_ratioLL->SetTitleSize(0.07);
+    h_zg_ratioTT->SetTitleSize(0.07);
+    std::vector<TH1*> zg_ratio_pol;
+    zg_ratio_pol.push_back(h_zg_ratioLL);
+    zg_ratio_pol.push_back(h_zg_ratioTT);
+    Makecanva2x1Bicolor(c_zg_ratio, zg_ratio_pol, colors);
+    c_zg_ratio->SaveAs("plots_z1/c_zg_ratio.pdf");*/
+
 
    
    
-    TCanvas *c_zg_q = new TCanvas("c_zg_q","GenParticle Quarks z_{g}", 1500, 900);
-    c_zg_q->Divide(2,1);
-
-    c_zg_q->cd(1);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_zg_quarksLL->Scale(1.0 / h_zg_quarksLL->Integral());
-    h_zg_quarksLL->Draw("hist");
-    h_zg_quarksLL->SetLineColor(kBlue+1);
-    h_zg_quarksLL->SetFillColor(kBlue+1);
-    h_zg_quarksLL->GetXaxis()->SetTitleSize(0.05);
-
-    c_zg_q->cd(2);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_zg_quarksTT->Scale(1.0 / h_zg_quarksTT->Integral());
-    h_zg_quarksTT->Draw("hist");
-    h_zg_quarksTT->SetLineColor(kRed+1);
-    h_zg_quarksTT->SetFillColor(kRed+1);
-    h_zg_quarksTT->GetXaxis()->SetTitleSize(0.05);
-
+    TCanvas *c_zg_q = new TCanvas("c_zg_q","GenParticle Quarks z_{g}", 1200, 600);
+    std::vector<TH1*> zg_q;
+    zg_q.push_back(h_zg_quarksLL);
+    zg_q.push_back(h_zg_quarksTT);
+    Makecanva2x1Bicolor(c_zg_q, zg_q, colors2);
     c_zg_q->SaveAs("plots_z1/c_zg_q.pdf");
 
+    /*TCanvas *c_zg_ratio_q = new TCanvas("c_zg_ratio_q","GenParticle Quarks z_{g}'", 1200, 600);
+    std::vector<TH1*> zg_ratio_q;
+    zg_ratio_q.push_back(h_zg_ratio_quarksLL);
+    zg_ratio_q.push_back(h_zg_ratio_quarksTT);
+    Makecanva2x1Bicolor(c_zg_ratio_q, zg_ratio_q, colors);
+    c_zg_ratio_q->SaveAs("plots_z1/c_zg_ratio_q.pdf");*/
 
 
 
-    TCanvas *c_ptheta_sj = new TCanvas("c_ptheta_sj","SubGenJet p_{#theta}", 1500, 900);
-    c_ptheta_sj->Divide(2,1);
 
-    c_ptheta_sj->cd(1);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_ptheta_subjetsLL->Scale(1.0 / h_ptheta_subjetsLL->Integral());
-    h_ptheta_subjetsLL->Draw("hist");
-    h_ptheta_subjetsLL->SetLineColor(kBlue+1);
-    h_ptheta_subjetsLL->SetFillColor(kBlue+1);
-    h_ptheta_subjetsLL->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_ptheta_sj->cd(2);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_ptheta_subjetsTT->Scale(1.0 / h_ptheta_subjetsTT->Integral());
-    h_ptheta_subjetsTT->Draw("hist");
-    h_ptheta_subjetsTT->SetLineColor(kRed+1);
-    h_ptheta_subjetsTT->SetFillColor(kRed+1);
-    h_ptheta_subjetsTT->GetXaxis()->SetTitleSize(0.05);
-
+    TCanvas *c_ptheta_sj = new TCanvas("c_ptheta_sj","SubGenJet p_{#theta}", 1200, 600);
+    h_ptheta_subjetsLL->SetTitleSize(0.07);
+    h_ptheta_subjetsTT->SetTitleSize(0.07);
+    std::vector<TH1*> ptheta_sj;
+    ptheta_sj.push_back(h_ptheta_subjetsLL);
+    ptheta_sj.push_back(h_ptheta_subjetsTT);
+    Makecanva2x1Bicolor(c_ptheta_sj, ptheta_sj, colors);
     c_ptheta_sj->SaveAs("plots_ptheta/c_ptheta_sj.pdf");
 
+    TCanvas *c_ptheta_sj_pol = new TCanvas("c_ptheta_sj_pol", "c_ptheta_sj_pol", 800, 600);
+    h_ptheta_subjetsLL->SetTitleSize(0.07);
+    h_ptheta_subjetsLL->SetStats(0);
+    h_ptheta_subjetsLL->SetTitle(Form("p_{#theta} subjets  p_{T} > %d   (CMS private work)", pt_lim));
+    h_ptheta_subjetsTT->SetTitleSize(0.07);
+    std::vector<TH1*> ptheta_sj_pol;
+    ptheta_sj_pol.push_back(h_ptheta_subjetsLL);
+    ptheta_sj_pol.push_back(h_ptheta_subjetsTT);
+    MakecanvaColor(c_ptheta_sj_pol, ptheta_sj_pol, colors2);
+    TLegend *leg3 = new TLegend(0.4, 0.74, 0.68, 0.88);
+    leg3->AddEntry(h_ptheta_subjetsLL, "L pol", "f");
+    leg3->AddEntry(h_ptheta_subjetsTT, "T pol", "f");
+    leg3->SetBorderSize(0);
+    leg3->SetFillStyle(0);
+    leg3->SetMargin(0.25);
+    leg3->Draw();
+    c_ptheta_sj_pol->SaveAs("plots_ptheta/c_ptheta_sj_pol.pdf");
 
 
-    TCanvas *c_ptheta_q = new TCanvas("c_ptheta_q","SubGenJet p_{#theta}", 1500, 900);
-    c_ptheta_q->Divide(2,1);
 
-    c_ptheta_q->cd(1);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_ptheta_quarksLL->Scale(1.0 / h_ptheta_quarksLL->Integral());
-    h_ptheta_quarksLL->Draw("hist");
-    h_ptheta_quarksLL->SetLineColor(kBlue+1);
-    h_ptheta_quarksLL->SetFillColor(kBlue+1);
-    h_ptheta_quarksLL->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_ptheta_q->cd(2);
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_ptheta_quarksTT->Scale(1.0 / h_ptheta_quarksTT->Integral());
-    h_ptheta_quarksTT->Draw("hist");
-    h_ptheta_quarksTT->SetLineColor(kRed+1);
-    h_ptheta_quarksTT->SetFillColor(kRed+1);
-    h_ptheta_quarksTT->GetXaxis()->SetTitleSize(0.05);
-
+    TCanvas *c_ptheta_q = new TCanvas("c_ptheta_q","SubGenJet p_{#theta}", 1200, 600);
+    std::vector<TH1*> ptheta_q;
+    ptheta_q.push_back(h_ptheta_quarksLL);
+    ptheta_q.push_back(h_ptheta_quarksTT);
+    Makecanva2x1Bicolor(c_ptheta_q, ptheta_q, colors2);
     c_ptheta_q->SaveAs("plots_ptheta/c_ptheta_q.pdf");
 
 
 
+    gStyle->SetOptStat(0);
 
-    TCanvas *c_dR_q_jet = new TCanvas("c_dR_q_jet", "#DeltaR q_1 - jet", 1300, 1000);
-    c_dR_q_jet->Divide(2,2);
+    /*TCanvas *c_dR_q_jet = new TCanvas("c_dR_q_jet", "#DeltaR q_1 - jet", 1200, 600);
+    std::vector<TH1*> dR_q_jet;
+    h_dR_q1_jetLL->SetTitleSize(0.08);
+    h_dR_q2_jetLL->SetTitleSize(0.08);
+    dR_q_jet.push_back(h_dR_q1_jetLL);
+    dR_q_jet.push_back(h_dR_q1_jetTT);
+    dR_q_jet.push_back(h_dR_q2_jetLL);
+    dR_q_jet.push_back(h_dR_q2_jetTT);
+    Makecanva2x1Bicolor(c_dR_q_jet, dR_q_jet, colors2);
+    TLegend *leg9 = new TLegend(0.6, 0.74, 0.88, 0.88);
+    leg9->AddEntry(h_dR_q2_jetLL, "L pol", "f");
+    leg9->AddEntry(h_dR_q2_jetTT, "T pol", "f");
+    leg9->SetBorderSize(0);
+    leg9->SetFillStyle(0);
+    leg9->SetMargin(0.25);
+    leg9->Draw();
 
-    c_dR_q_jet->cd(1);
-    h_dR_q1_jetLL->Scale(1.0 / h_dR_q1_jetLL->Integral());
-    h_dR_q1_jetLL->Draw("hist");
-    h_dR_q1_jetLL->SetLineColor(kBlue+1);
-    h_dR_q1_jetLL->SetFillColor(kBlue+1);
-    h_dR_q1_jetLL->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_dR_q_jet->cd(2);
-    h_dR_q1_jetTT->Scale(1.0 / h_dR_q1_jetTT->Integral());
-    h_dR_q1_jetTT->Draw("hist");
-    h_dR_q1_jetTT->SetLineColor(kRed+1);
-    h_dR_q1_jetTT->SetFillColor(kRed+1);
-    h_dR_q1_jetTT->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_dR_q_jet->cd(3);
-    h_dR_q2_jetLL->Scale(1.0 / h_dR_q2_jetLL->Integral());
-    h_dR_q2_jetLL->Draw("hist");
-    h_dR_q2_jetLL->SetLineColor(kBlue+1);
-    h_dR_q2_jetLL->SetFillColor(kBlue+1);
-    h_dR_q2_jetLL->GetXaxis()->SetTitleSize(0.05);
+    c_dR_q_jet->SaveAs("plots_pt/c_dR_q_jet.pdf");*/
 
 
-    c_dR_q_jet->cd(4);
-    h_dR_q2_jetTT->Scale(1.0 / h_dR_q2_jetTT->Integral());
-    h_dR_q2_jetTT->Draw("hist");
-    h_dR_q2_jetTT->SetLineColor(kRed+1);
-    h_dR_q2_jetTT->SetFillColor(kRed+1);
-    h_dR_q2_jetTT->GetXaxis()->SetTitleSize(0.05);
-
-    c_dR_q_jet->SaveAs("plots_pt/c_dR_q_jet.pdf");
-
-
-
-    TCanvas *c_NmatchedJets = new TCanvas("c_NmatchedJets", "N matched Jets per event", 1500, 900);
-    c_NmatchedJets->Divide(2,1);
-
-    c_NmatchedJets->cd(1);
-    h_nMatchedJetsLL->Scale(1.0 / h_nMatchedJetsLL->Integral());
-    h_nMatchedJetsLL->Draw("hist");
-    h_nMatchedJetsLL->SetLineColor(kBlue+1);
-    h_nMatchedJetsLL->SetFillColor(kBlue+1);
-    h_nMatchedJetsLL->GetXaxis()->SetTitleSize(0.05);
-
-
-    c_NmatchedJets->cd(2);
-    h_nMatchedJetsTT->Scale(1.0 / h_nMatchedJetsTT->Integral());
-    h_nMatchedJetsTT->Draw("hist");
-    h_nMatchedJetsTT->SetLineColor(kRed+1);
-    h_nMatchedJetsTT->SetFillColor(kRed+1);
-    h_nMatchedJetsTT->GetXaxis()->SetTitleSize(0.05);
-    c_NmatchedJets->SaveAs("plots_nmatch/c_NmatchedJets.pdf");
 
 
     gStyle->SetOptStat(0);
-/*
-    TCanvas *c_LepP = new TCanvas("c_LepP", "Lepton projetions", 900, 700);
-    h_Lp_LL->SetTitle("Lepton projetions");
-    gPad->SetLeftMargin(0.15);
-    gPad->SetBottomMargin(0.15);
-    h_Lp_LL->Scale(1.0 / h_Lp_LL->Integral());
-    h_Lp_LL->Draw("hist");
-    h_Lp_LL->SetLineColor(kGreen-4);
-    h_Lp_LL->SetFillColor(kGreen-4);
-    h_Lp_TT->Scale(1.0 / h_Lp_TT->Integral());
-    h_Lp_TT->SetMarkerColor(kBlack);
-    h_Lp_TT->SetLineColor(kBlack);
-    h_Lp_TT->SetMarkerStyle(20);
-    h_Lp_TT->SetMarkerSize(1.5);
-    h_Lp_TT->Draw("P same");
-    h_Lp_LL->GetXaxis()->SetTitleSize(0.05);
 
-
-    TLegend *leg1 = new TLegend(0.75, 0.75, 0.9, 0.9);
-    leg1->AddEntry(h_Lp_LL, "L pol", "l");
-    leg1->AddEntry(h_Lp_TT, "T pol", "l");
+    /*TCanvas *c_LepP = new TCanvas("c_LepP", "Lepton projetion", 900, 700);
+    std::vector<TH1*> LepP;
+    LepP.push_back(h_Lp_TT);
+    LepP.push_back(h_Lp_LL);
+    Makecanva(c_LepP, LepP, kGreen-4);
+    TLegend *leg1 = new TLegend(0.2, 0.7, 0.35, 0.8);
+    leg1->AddEntry(h_Lp_LL, "L pol", "f");
+    leg1->AddEntry(h_Lp_TT, "T pol", "f");
+    leg1->SetBorderSize(0);
+    leg1->SetFillStyle(0);
+    leg1->SetMargin(0.25);
     leg1->Draw();
-
-    c_LepP->SaveAs("plots_lp/c_LepP.pdf");
+    c_LepP->SaveAs("plots_lp/c_LepP_gen.pdf");
 
     
 
-    TCanvas *c_lep_pt = new TCanvas("c_lep_pt", "Leptons p_{t}", 900, 700);
-
-    h_lep_ptLL->SetTitle("Lepton p_{t}");
-    gPad->SetBottomMargin(0.15);
-    h_lep_ptLL->Scale(1.0 / h_lep_ptLL->Integral());
-    h_lep_ptLL->Draw("hist");
-    h_lep_ptLL->SetLineColor(kGreen-4);
-    h_lep_ptLL->SetFillColor(kGreen-4);
-    h_lep_ptLL->GetXaxis()->SetTitleSize(0.05);
-    h_lep_ptTT->Scale(1.0 / h_lep_ptTT->Integral());
-    h_lep_ptTT->SetMarkerColor(kBlack);
-    h_lep_ptTT->SetLineColor(kBlack);
-    h_lep_ptTT->SetMarkerStyle(20);
-    h_lep_ptTT->SetMarkerSize(1.5);
-    h_lep_ptTT->Draw("P same");
-
-    TLegend *leg4 = new TLegend(0.75, 0.75, 0.9, 0.9);
-    leg4->AddEntry(h_lep_ptLL, "L pol", "l");
-    leg4->AddEntry(h_lep_ptTT, "T pol", "l");
+    TCanvas *c_lep_pt = new TCanvas("c_lep_pt", "Lepton p_{T}", 900, 700);
+    std::vector<TH1*> lep_pt;
+    lep_pt.push_back(h_lep_ptLL);
+    lep_pt.push_back(h_lep_ptTT);
+    Makecanva(c_lep_pt, lep_pt, kGreen-4);
+    TLegend *leg4 = new TLegend(0.5, 0.7, 0.65, 0.8);
+    leg4->AddEntry(h_lep_ptLL, "L pol", "f");
+    leg4->AddEntry(h_lep_ptTT, "T pol", "f");
+    leg4->SetBorderSize(0);
+    leg4->SetFillStyle(0);
+    leg4->SetMargin(0.25);
     leg4->Draw();
+    c_lep_pt->SaveAs("plots_lp/c_lep_pt_gen.pdf");
 
-    c_lep_pt->SaveAs("plots_lp/c_lep_pt.pdf");*/
-
-    TCanvas *c_lep_eta = new TCanvas("c_lep_eta", "Leptons #eta", 900, 700);
-    h_lep_etaLL->SetTitle("Lepton pseudorapidity #eta");
-    gPad->SetBottomMargin(0.15);
-    h_lep_etaLL->Scale(1.0 / h_lep_etaLL->Integral());
-    h_lep_etaLL->Draw("hist");
-    h_lep_etaLL->SetLineColor(kGreen-4);
-    h_lep_etaLL->SetFillColor(kGreen-4);
-    h_lep_etaLL->GetXaxis()->SetTitleSize(0.05);
-    h_lep_etaTT->Scale(1.0 / h_lep_etaTT->Integral());
-    h_lep_etaTT->SetMarkerColor(kBlack);
-    h_lep_etaTT->SetLineColor(kBlack);
-    h_lep_etaTT->SetMarkerStyle(20);
-    h_lep_etaTT->SetMarkerSize(1.5);
-    h_lep_etaTT->Draw("P same");
-
-    TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
-    leg5->AddEntry(h_lep_etaLL, "L pol", "l");
-    leg5->AddEntry(h_lep_etaTT, "T pol", "l");
+    TCanvas *c_lep_eta = new TCanvas("c_lep_eta", "Lepton #eta", 900, 700);
+    std::vector<TH1*> lep_eta;
+    lep_eta.push_back(h_lep_etaTT);
+    lep_eta.push_back(h_lep_etaLL);
+    Makecanva(c_lep_eta, lep_eta, kGreen-4);
+    TLegend *leg5 = new TLegend(0.7, 0.75, 0.85, 0.85);
+    leg5->AddEntry(h_lep_etaLL, "L pol", "f");
+    leg5->AddEntry(h_lep_etaTT, "T pol", "f");
+    leg5->SetBorderSize(0);
+    leg5->SetFillStyle(0);
+    leg5->SetMargin(0.25);
     leg5->Draw();
+    c_lep_eta->SaveAs("plots_lp/c_lep_eta_gen.pdf");
 
-    c_lep_eta->SaveAs("plots_lp/c_lep_eta.pdf");
 
-
-    TCanvas *c_lep_phi = new TCanvas("c_lep_phi", "Leptons #eta", 900, 700);
-    h_lep_phiLL->SetTitle("Lepton #phi");
-    gPad->SetBottomMargin(0.15);
-    h_lep_phiLL->Scale(1.0 / h_lep_phiLL->Integral());
-    h_lep_phiLL->Draw("hist");
-    h_lep_phiLL->SetLineColor(kGreen-4);
-    h_lep_phiLL->SetFillColor(kGreen-4);
-    h_lep_phiLL->GetXaxis()->SetTitleSize(0.05);
-    h_lep_phiTT->Scale(1.0 / h_lep_phiTT->Integral());
-    h_lep_phiTT->SetMarkerColor(kBlack);
-    h_lep_phiTT->SetLineColor(kBlack);
-    h_lep_phiTT->SetMarkerStyle(20);
-    h_lep_phiTT->SetMarkerSize(1.5);
-    h_lep_phiTT->Draw("P same");
-
-    TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
-    leg6->AddEntry(h_lep_phiLL, "L pol", "l");
-    leg6->AddEntry(h_lep_phiTT, "T pol", "l");
+    TCanvas *c_lep_phi = new TCanvas("c_lep_phi", "Lepton #eta", 900, 700);
+    std::vector<TH1*> lep_phi;
+    lep_phi.push_back(h_lep_phiLL);
+    lep_phi.push_back(h_lep_phiTT);
+    Makecanva(c_lep_phi, lep_phi, kGreen-4);
+    TLegend *leg6 = new TLegend(0.45, 0.4, 0.6, 0.5);
+    leg6->AddEntry(h_lep_phiLL, "L pol", "f");
+    leg6->AddEntry(h_lep_phiTT, "T pol", "f");
+    leg6->SetBorderSize(0);
+    leg6->SetMargin(0.25);
     leg6->Draw();
+    c_lep_phi->SaveAs("plots_lp/c_lep_phi_gen.pdf");*/
 
-    c_lep_phi->SaveAs("plots_lp/c_lep_phi.pdf");
+
+    TCanvas *c_cos2D = new TCanvas("c_cos2D", "Lepton projetions", 900, 700);
+    std::vector<TH1*> cos2D;
+    cos2D.push_back(h_cos2D_TT);
+    cos2D.push_back(h_cos2D_LL);
+    Makecanva(c_cos2D, cos2D, kGreen-4);
+    TLegend *leg7 = new TLegend(0.45, 0.7, 0.6, 0.8);
+    leg7->AddEntry(h_cos2D_LL, "L pol", "f");
+    leg7->AddEntry(h_cos2D_TT, "T pol", "f");
+    leg7->SetBorderSize(0);
+    leg7->SetFillStyle(0);
+    leg7->SetMargin(0.25);
+    leg7->Draw();
+    c_cos2D->SaveAs("plots_lp/c_cos2D_gen.pdf");
 
 
+    TCanvas *c_costheta_star = new TCanvas("c_costheta_gen", "Lepton projetions", 900, 700);
+    std::vector<TH1*> costheta_star;
+    costheta_star.push_back(h_costheta_star_TT);
+    costheta_star.push_back(h_costheta_star_LL);
+    Makecanva(c_costheta_star, costheta_star, kGreen-4);
+    TLegend *leg8 = new TLegend(0.2, 0.75, 0.35, 0.85);
+    leg8->AddEntry(h_costheta_star_LL, "L pol", "f");
+    leg8->AddEntry(h_costheta_star_TT, "T pol", "f");
+    leg8->SetBorderSize(0);
+    leg8->SetFillStyle(0);
+    leg8->SetMargin(0.25);
+    leg8->Draw();
+    c_costheta_star->SaveAs("plots_lp/c_costheta_star_gen.pdf");
 
 
 
